@@ -1,15 +1,73 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Transaction = sequelize.define('Transaction', {
-      amount: DataTypes.FLOAT,
-      description: DataTypes.STRING,
-      paymentMethod: DataTypes.ENUM('debit_card', 'credit_card'),
-      cardNumber: DataTypes.STRING(20),
-      cardholderName: DataTypes.STRING,
-      expirationDate: DataTypes.STRING(4),
-      cvv: DataTypes.STRING(3)
-  }, {});
-  Transaction.associate = function(models) {
-  };
-  return Transaction;
+    const Transaction = sequelize.define('Transaction', {
+        amount: {
+            type: DataTypes.FLOAT,
+            allowNull: false,
+            validate: {
+                isFloat: true,
+                notEmpty: true,
+                notNull: true
+            }
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                notNull: true
+            }
+        },
+        paymentMethod: {
+            type:  DataTypes.ENUM('debit_card', 'credit_card'),
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                isIn: [['debit_card', 'credit_card']],
+                notNull: true
+            }
+        },
+        cardNumber: {
+            type: DataTypes.STRING(20),
+            allowNull: false,
+            validate: {
+                isCreditCard: true,
+                notEmpty: true,
+                notNull: true
+            }
+
+        },
+        cardholderName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                notNull: true
+            }
+        },
+        expirationDate: {
+            type: DataTypes.STRING(4),
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                len: [4],
+                isInt: true,
+                notNull: true
+            }
+        },
+        cvv: {
+            type: DataTypes.STRING(3),
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                len: [3],
+                isInt: true,
+                notNull: true
+            }
+        }
+    }, {});
+    Transaction.associate = function(models) {
+    };
+    return Transaction;
 };
+

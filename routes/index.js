@@ -4,23 +4,14 @@ const router = Router();
 
 import 'dotenv/config'
 import models, { sequelize  } from '../models';
+import TransactionsController from '../controllers/transactions_controller.js';
+import ResponseFormatterHelper from '../helpers/response_formatter_helper.js';
 
-/* GET index page. */
-router.get('/', (req, res) => {
-  res.json({
-    title: 'Express'
-  });
-});
+let helper = new ResponseFormatterHelper();
+let transactionsController = new TransactionsController(helper);
 
 router.post('/api/v1/transactions', (req, res) => {
-    models
-        .Transaction
-        .create(req.body)
-        .then(function(transaction) {
-            res.status(201)
-               .json({ data: transaction.dataValues});
-        });
+    transactionsController.create(req, res);
 });
-
 
 module.exports = router;

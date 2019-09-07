@@ -10,7 +10,7 @@ const expect = chai.expect;
 describe('POST /transactions', () => {
     describe('when data are valid', () => {
 
-        const data = {
+        const validData = {
             "amount": 21.00,
             "description": "Meu produto",
             "paymentMethod": "credit_card",
@@ -25,7 +25,7 @@ describe('POST /transactions', () => {
                 .post('/api/v1/transactions')
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
-                .send(data).end((err, res) => {
+                .send(validData).end((err, res) => {
                     expect(res).to.have.status(201);
                     done();
                 });
@@ -36,9 +36,61 @@ describe('POST /transactions', () => {
                 .post('/api/v1/transactions')
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
-                .send(data).end((err, res) => {
+                .send(validData).end((err, res) => {
                     expect(res.body.data.id).to.not.be.null;
                     expect(res).to.be.json;
+                    done();
+                });
+        });
+    });
+
+    describe('when data are invalid', () => {
+        const invalidData = {
+            "amount": null,
+            "description": "",
+            "paymentMethod": "invalid_option",
+            "cardNumber": "acb",
+            "cardholderName": "",
+            "expirationDate": "",
+            "cvv": ""
+        };
+
+        it('should return http status bad request', (done) => {
+            chai.request(app)
+                .post('/api/v1/transactions')
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(invalidData).end((err, res) => {
+                    expect(res).to.have.status(400);
+                    done();
+                });
+        });
+
+        it('should not create a new transaction on database', (done) => {
+            chai.request(app)
+                .post('/api/v1/transactions')
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(invalidData).end((err, res) => {
+                    expect(res.body.data).to.be.undefined;
+                    done();
+                });
+        });
+
+
+        it('should return an errors json', (done) => {
+            chai.request(app)
+                .post('/api/v1/transactions')
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(invalidData).end((err, res) => {
+                    expect(res.body.errors.amount).to.be.an('array');
+                    expect(res.body.errors.description).to.be.an('array');
+                    expect(res.body.errors.paymentMethod).to.be.an('array');
+                    expect(res.body.errors.cardNumber).to.be.an('array');
+                    expect(res.body.errors.cardholderName).to.be.an('array');
+                    expect(res.body.errors.expirationDate).to.be.an('array');
+                    expect(res.body.errors.cvv).to.be.an('array');
                     done();
                 });
         });
