@@ -1,6 +1,11 @@
 class ResponseFormatterHelper {
-    formatCreatedResponse(response, model) {
-        return response.status(201).json({ data: model.dataValues });
+
+    formatSuccessResponse(response, data) {
+        return response.status(200).json({ data: data });
+    }
+
+    formatCreatedResponse(response, data) {
+        return response.status(201).json({ data: data });
     }
 
     formatErrorsResponse(response, sequelizeValidationError) {

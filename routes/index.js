@@ -10,6 +10,10 @@ import ResponseFormatterHelper from '../helpers/response_formatter_helper.js';
 let helper = new ResponseFormatterHelper();
 let transactionsController = new TransactionsController(helper);
 
+router.get('/api/v1/transactions', (req, res) => {
+    transactionsController.index(req, res);
+});
+
 router.post('/api/v1/transactions', (req, res) => {
     transactionsController.create(req, res);
 });
