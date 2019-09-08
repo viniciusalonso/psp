@@ -68,9 +68,10 @@ module.exports = (sequelize, DataTypes) => {
                 isInt: true,
                 notNull: true
             }
-        }
+        },
     }, {});
     Transaction.associate = function(models) {
+        Transaction.hasOne(models.Payable, { foreignKey: 'transactionId', as: 'payable' })
     };
     return Transaction;
 };

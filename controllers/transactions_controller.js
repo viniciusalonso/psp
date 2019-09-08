@@ -3,8 +3,9 @@ import pry from 'pryjs'
 
 class TransactionsController {
 
-    constructor(helper) {
+    constructor(helper, payableCreator) {
         this.helper = helper;
+        this.payableCreator = payableCreator;
     }
 
     index(request, response) {
@@ -18,6 +19,7 @@ class TransactionsController {
     create(request, response) {
         return models.Transaction.create(request.body)
             .then((transaction) => {
+                this.payableCreator.create(transaction);
                 return this.helper.formatCreatedResponse(response, transaction.dataValues);
             }).catch((sequelizeValidationError) => {
                 return this.helper.formatErrorsResponse(response, sequelizeValidationError);
