@@ -29,7 +29,7 @@ describe('POST /transactions', () => {
             });
 
             const transactionViaCreditCard = {
-                "amount": 10.00,
+                "amount": 100.00,
                 "description": "Meu produto",
                 "paymentMethod": "credit_card",
                 "cardNumber": "5555666677778884",
@@ -54,6 +54,12 @@ describe('POST /transactions', () => {
                 done();
 
             });
+
+            it('should discount 5% of fee', (done) => {
+                expect(payable.amount).to.equal(95);
+                done();
+            });
+
 
         });
     });

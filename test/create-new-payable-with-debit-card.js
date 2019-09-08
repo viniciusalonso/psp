@@ -29,7 +29,7 @@ describe('POST /transactions', () => {
             });
 
             const transactionViaDebitCard = {
-                "amount": 10.00,
+                "amount": 100.00,
                 "description": "Meu produto",
                 "paymentMethod": "debit_card",
                 "cardNumber": "5555666677778884",
@@ -49,8 +49,13 @@ describe('POST /transactions', () => {
                     .equal(new Date(rawTransaction.createdAt).toString());
 
                 done();
-
             });
+
+            it('should discount 3% of fee', (done) => {
+                expect(payable.amount).to.equal(97);
+                done();
+            });
+
 
         });
 
