@@ -50,7 +50,7 @@ describe('GET /transactions', () => {
                 expect(data[index].amount).to.equal(21.5);
                 expect(data[index].description).to.equal("Meu produto");
                 expect(data[index].paymentMethod).to.equal("credit_card");
-                expect(data[index].cardNumber).to.equal("5555666677778884");
+                expect(data[index].cardNumber).to.equal("8884");
                 expect(data[index].cardholderName).to.equal("Vinícius Alonso");
                 expect(data[index].description).to.equal("Meu produto");
 

@@ -31,11 +31,15 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(20),
             allowNull: false,
             validate: {
-                isCreditCard: true,
                 notEmpty: true,
-                notNull: true
+                notNull: true,
+                isInt: true,
+            },
+            set(value) {
+                let lastIndex = value.length;
+                let cardLastFourNumbers = value.slice(lastIndex - 4, lastIndex);
+                this.setDataValue('cardNumber', cardLastFourNumbers);
             }
-
         },
         cardholderName: {
             type: DataTypes.STRING,
