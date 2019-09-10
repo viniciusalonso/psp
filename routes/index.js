@@ -4,8 +4,8 @@ const router = Router();
 
 import 'dotenv/config'
 import models, { sequelize  } from '../models';
-import TransactionsController from '../controllers/transactions_controller.js';
-import ResponseFormatterHelper from '../helpers/response_formatter_helper.js';
+import TransactionsController from '../controllers/transactions-controller.js';
+import ResponseFormatterHelper from '../helpers/response-formatter-helper.js';
 import PayableCreator from '../services/payable-creator.js';
 
 let helper = new ResponseFormatterHelper();
