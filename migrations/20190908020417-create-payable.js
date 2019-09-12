@@ -17,7 +17,7 @@ module.exports = {
         allowNull: false,
       },
       amount: {
-          type: Sequelize.FLOAT,
+          type: Sequelize.NUMERIC(6,2),
           allowNull: false,
       },
       transactionId: {

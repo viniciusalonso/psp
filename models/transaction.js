@@ -2,13 +2,13 @@
 module.exports = (sequelize, DataTypes) => {
     const Transaction = sequelize.define('Transaction', {
         amount: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.NUMERIC(6,2),
             allowNull: false,
             validate: {
                 isFloat: true,
                 notEmpty: true,
                 notNull: true
-            }
+            },
         },
         description: {
             type: DataTypes.STRING,
