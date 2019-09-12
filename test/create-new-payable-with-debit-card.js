@@ -67,7 +67,7 @@ describe('POST /transactions', () => {
             });
 
             it('should discount 3% of fee', (done) => {
-                expect(payable.amount).to.equal(97);
+                expect(payable.amount).to.equal('97.00');
                 done();
             });
 

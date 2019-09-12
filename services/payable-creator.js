@@ -20,7 +20,7 @@ class PayableCreator {
             'amount': rules.discountFee()
         };
 
-        models.Payable.create(payableData);
+        return models.Payable.create(payableData);
     }
 }
 

@@ -16,14 +16,14 @@ class TransactionsController {
         });
     }
 
-    create(request, response) {
-        return models.Transaction.create(request.body)
-            .then((transaction) => {
-                this.payableCreator.create(transaction);
-                return this.helper.formatCreatedResponse(response, transaction.dataValues);
-            }).catch((sequelizeValidationError) => {
-                return this.helper.formatErrorsResponse(response, sequelizeValidationError);
-            });
+    async create(request, response) {
+        try {
+            const transaction = await models.Transaction.create(request.body);
+            const payable = await this.payableCreator.create(transaction);
+            return await this.helper.formatCreatedResponse(response, transaction.dataValues);
+        } catch (e) {
+            return this.helper.formatErrorsResponse(response, e);
+        }
     }
 }
 
