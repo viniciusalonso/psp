@@ -3,12 +3,10 @@ const { Router } = require('express');
 const router = Router();
 
 import 'dotenv/config'
-import models, { sequelize  } from '../models';
-import TransactionsController from '../controllers/transactions-controller.js';
-import BalanceController from '../controllers/balance-controller.js';
-import ResponseFormatterHelper from '../helpers/response-formatter-helper.js';
-import PayableCreator from '../services/payable-creator.js';
-import BalanceService from '../services/balance-service.js';
+
+import { BalanceController, TransactionsController  } from '../controllers';
+import { ResponseFormatterHelper } from '../helpers/';
+import { BalanceService, PayableCreator } from '../services';
 
 let helper = new ResponseFormatterHelper();
 let payableCreator = new PayableCreator();
