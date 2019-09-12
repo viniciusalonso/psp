@@ -1,24 +1,26 @@
-import DebitCardPayableCreator from './debit-card/debit-card-payable-creator.js';
-import CreditCardPayableCreator from './credit-card/credit-card-payable-creator.js';
-
+import { DebitCardRules, CreditCardRules } from './card-rules';
 import models from '../models';
 
 class PayableCreator {
 
     create(transaction) {
-        if (transaction.paymentMethod == 'debit_card') {
-            let debitCard = new DebitCardPayableCreator();
-            let payableDataToCreate = debitCard.payableDataToCreate(transaction);
+        let rules = null;
 
-            models.Payable.create(payableDataToCreate);
+        if (transaction.paymentMethod == 'debit_card') {
+            rules = new DebitCardRules(transaction);
         }
         else {
-            let creditCard = new CreditCardPayableCreator();
-            let payableDataToCreate = creditCard.payableDataToCreate(transaction);
-
-            models.Payable.create(payableDataToCreate);
+            rules = new CreditCardRules(transaction);
         }
 
+        let payableData = {
+            'transactionId': transaction.id,
+            'status': rules.getStatus(),
+            'paymentDate': rules.getPaymentDate(),
+            'amount': rules.discountFee()
+        };
+
+        models.Payable.create(payableData);
     }
 }
 
