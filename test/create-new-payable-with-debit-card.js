@@ -1,7 +1,8 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-import models, { sequelize  } from '../models';
+import models from '../models';
+import Sequelize from 'sequelize';
 const app = require('../app');
 
 chai.should();
@@ -28,8 +29,22 @@ describe('POST /transactions', () => {
 
             });
 
+            after((done) => {
+                models.Payable.destroy({
+                    where: {
+                        status: {
+                            [Sequelize.Op.ne]: null
+                        }
+                    }
+                }).then(() => {
+                    done();
+                });
+
+            });
+
+
             const transactionViaDebitCard = {
-                "amount": 100.00,
+                "amount": "100.00",
                 "description": "Meu produto",
                 "paymentMethod": "debit_card",
                 "cardNumber": "5555666677778884",

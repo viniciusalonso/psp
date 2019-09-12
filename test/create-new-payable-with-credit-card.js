@@ -1,8 +1,9 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
 
-import models, { sequelize  } from '../models';
-const app = require('../app');
+import models from '../models';
+import app from '../app';
+import Sequelize from 'sequelize';
 
 chai.should();
 chai.use(chaiHttp);
@@ -27,6 +28,20 @@ describe('POST /transactions', () => {
                     });
 
             });
+
+            after((done) => {
+                models.Payable.destroy({
+                    where: {
+                        status: {
+
+                            [Sequelize.Op.ne]: null
+                        }
+                    }
+                }).then(() => {
+                    done();
+                });
+            });
+
 
             const transactionViaCreditCard = {
                 "amount": 100.00,
@@ -56,7 +71,7 @@ describe('POST /transactions', () => {
             });
 
             it('should discount 5% of fee', (done) => {
-                expect(payable.amount).to.equal(95);
+                expect(payable.amount).to.equal("95.00");
                 done();
             });
 

@@ -2,6 +2,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 
 const app = require('../app');
+import Sequelize from 'sequelize';
+import models from '../models';
 
 chai.should();
 chai.use(chaiHttp);
@@ -9,6 +11,20 @@ const expect = chai.expect;
 
 describe('POST /transactions', () => {
     describe('when data are valid', () => {
+        after((done) => {
+            models.Payable.destroy({
+                where: {
+                    status: {
+                        [Sequelize.Op.ne]: null
+                    }
+                }
+            }).then(() => {
+                done();
+            });
+
+        });
+
+
 
         const validData = {
             "amount": 21.00,

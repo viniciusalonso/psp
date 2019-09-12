@@ -2,7 +2,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 
 const app = require('../app');
-import models, { sequelize  } from '../models';
+import models from '../models';
+import Sequelize from 'sequelize';
 
 chai.should();
 chai.use(chaiHttp);
@@ -23,6 +24,20 @@ describe('GET /transactions', () => {
             done();
         });
     });
+
+    after((done) => {
+        models.Payable.destroy({
+            where: {
+                status: {
+                    [Sequelize.Op.ne]: null
+                }
+            }
+        }).then(() => {
+            done();
+        });
+
+    });
+
 
     it('should return http status success', (done) => {
         chai.request(app)
@@ -47,7 +62,7 @@ describe('GET /transactions', () => {
                 expect(data).to.be.an('array');
                 expect(res).to.be.json;
 
-                expect(data[index].amount).to.equal(21.5);
+                expect(data[index].amount).to.equal('21.50');
                 expect(data[index].description).to.equal("Meu produto");
                 expect(data[index].paymentMethod).to.equal("credit_card");
                 expect(data[index].cardNumber).to.equal("8884");
