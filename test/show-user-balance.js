@@ -10,7 +10,7 @@ chai.should();
 chai.use(chaiHttp);
 const expect = chai.expect;
 
-describe('GET /balance', () => {
+describe('GET /api/v1/balance', () => {
 
     before((done) => {
         let payableCreator = new PayableCreator();
@@ -77,7 +77,7 @@ describe('GET /balance', () => {
             });
     });
 
-    it('should sum available and waiting_funds balance', (done) => {
+    it('should does available/waiting_funds balance to user', (done) => {
         chai.request(app)
             .get('/api/v1/balance')
             .set('Content-Type', 'application/json')

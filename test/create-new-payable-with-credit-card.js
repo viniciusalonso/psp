@@ -9,7 +9,7 @@ chai.should();
 chai.use(chaiHttp);
 const expect = chai.expect;
 
-describe('POST /transactions', () => {
+describe('POST /api/v1/transactions', () => {
     describe('when create a new payable', () => {
         describe('using a credit card', () => {
             let payable = null;

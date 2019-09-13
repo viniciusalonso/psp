@@ -9,7 +9,7 @@ chai.should();
 chai.use(chaiHttp);
 const expect = chai.expect;
 
-describe('GET /transactions', () => {
+describe('GET /api/v1/transactions', () => {
 
     before((done) => {
         models.Transaction.create({
