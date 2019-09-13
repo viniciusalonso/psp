@@ -9,6 +9,7 @@
     "test": "NODE_ENV=test nyc mocha --require @babel/register 'test/**.js'"
   },
   "dependencies": {
+    "@babel/register": "^7.6.0",
     "@babel/runtime-corejs2": "^7.6.0",
     "cookie-parser": "^1.4.4",
     "debug": "^4.1.1",

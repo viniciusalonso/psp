@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - 3000:3000
+    links:
+      - db
+    depends_on:
+      - db
+    command: npm start
+
+  db:
+    image: postgres
