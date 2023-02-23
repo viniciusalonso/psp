@@ -20,7 +20,7 @@
     "nyc": "^14.1.1",
     "pg": "^7.12.1",
     "pryjs": "^1.0.3",
-    "sequelize": "^5.18.2"
+    "sequelize": "^6.28.2"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
